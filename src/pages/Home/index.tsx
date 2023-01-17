@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 
 import { searchRestaurants } from '../../utils';
+import CardsList from '../../components/CardsList';
 import RestaurantCard from '../../components/RestaurantCard';
 import SearchBar from '../../components/SearchBar';
 import Map from '../../components/Map';
@@ -60,22 +61,24 @@ const SweetTitle = styled('h1')({
 });
 
 const HomePage = () => {
-  // const [searchWord, setSearchWord] = useState<string>('');
+  const [searchWord, setSearchWord] = useState<string>('');
   const [randomData, setRandomData] = useState<CardModel>();
+  const [restaurantData, setRestaurantData] = useState<CardModel[]>();
 
-  const getData = async () => {
-    const data: DataType = await searchRestaurants('restaurant');
+  const getData = async (searchWord: string) => {
+    const data: DataType = await searchRestaurants(searchWord || 'restaurant');
     const { results } = data;
+    setRestaurantData(results);
     setRandomData(results[Math.floor(Math.random() * results.length)]);
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    getData(searchWord);
+  }, [searchWord]);
 
   return (
     <>
-      <SearchBar />
+      <SearchBar setSearchWord={setSearchWord} />
       <TitleWrapper>
         <SweetTitle>
           <span data-text="Find Restaurant">Find Restaurant</span>
@@ -83,10 +86,11 @@ const HomePage = () => {
         </SweetTitle>
       </TitleWrapper>
       <HomeCompoenet>
-        Random Restaurant
-        {' '}
-        {randomData && <RestaurantCard data={randomData} />}
-        {/* <CardsList /> */}
+        {!searchWord
+          ? 'Random Restaurant'
+          : searchWord}
+        {!searchWord && randomData && <RestaurantCard data={randomData} />}
+        {searchWord && restaurantData && <CardsList restaurantData={restaurantData} />}
       </HomeCompoenet>
       <MapView>
         <Map lat={randomData?.geocodes.main.latitude || 0} lng={randomData?.geocodes.main.longitude || 0} />

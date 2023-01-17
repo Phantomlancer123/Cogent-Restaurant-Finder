@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -46,7 +46,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchBar() {
+type Props = {
+  setSearchWord: (searchWord: string) => void
+};
+
+const SearchBar: React.FC<Props> = ({ setSearchWord }) => {
+  const [word, setWord] = useState('');
+  const handleSearchBox = useCallback((e) => {
+    setWord(e.target.value);
+  }, []);
+  const handleKeyDown = useCallback((e: any) => {
+    if (e.key === 'Enter') { setSearchWord(word); }
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -66,10 +78,14 @@ export default function SearchBar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleSearchBox}
+              onKeyDown={handleKeyDown}
             />
           </Search>
         </Toolbar>
       </AppBar>
     </Box>
   );
-}
+};
+
+export default SearchBar;
