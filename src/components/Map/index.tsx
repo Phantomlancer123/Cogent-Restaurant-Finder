@@ -4,22 +4,22 @@ import { currentLocation } from '../../config/Location';
 import { CardModel } from '../../models';
 
 type Props = {
-  locations: CardModel[],
+  locations?: CardModel[],
   status: boolean,
-  randomData: CardModel
+  randomData?: CardModel
 };
 
 const Map: React.FC<Props> = ({ locations, status, randomData }) => {
   const positions: any = [];
 
-  if (status) {
+  if (status && randomData) {
     positions.push(
       {
         lat: randomData.geocodes.main.latitude,
         lng: randomData.geocodes.main.longitude,
       },
     );
-  } else {
+  } else if (locations) {
     locations.forEach((location) => {
       positions.push(
         {

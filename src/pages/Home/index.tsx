@@ -97,14 +97,9 @@ const HomePage = () => {
         {(!status && restaurantData) && <CardsList restaurantData={restaurantData} />}
         {!randomData && 'No Result'}
       </HomeCompoenet>
-      {
-        (restaurantData && randomData)
-        && (
-          <MapView>
-            <Map locations={restaurantData} status={status} randomData={randomData} />
-          </MapView>
-        )
-      }
+      <MapView>
+        <Map locations={restaurantData} status={status} randomData={randomData} />
+      </MapView>
     </>
   );
 };

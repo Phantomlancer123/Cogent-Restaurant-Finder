@@ -27,15 +27,15 @@ export const urlConfig = {
 
 export const searchRestaurants = async (query: string) => {
   const newParams = { ...params, query };
-  const urlString = `${urlConfig.apiUrl}/places/search?fields=fsq_id,name,rating,location,geocodes,photos,hours,tel,categories&`
+  const urlString = `${urlConfig.apiUrl}/places/search?fields=fsq_id,name,price,rating,location,geocodes,photos,categories&`
     + `${QueryString.stringify(newParams)}&${QueryString.stringify(CREDENTIALS)}`;
   return originalFetch(urlString);
 };
 
-export const getRestaurantDetail = async ({ id }: any) => {
+export const getRestaurantDetail = async (id: string) => {
   if (!id) return;
   const urlString = `${urlConfig.apiUrl}/places/`
-    + `${id}?fields=fsq_id,name,rating,location,photos,hours,tel,categories&${QueryString.stringify(CREDENTIALS)}`;
+    + `${id}?fields=fsq_id,name,website,stats,geocodes,popularity,tips,tastes,features,rating,location,photos,hours,tel&${QueryString.stringify(CREDENTIALS)}`;
   // eslint-disable-next-line consistent-return
   return originalFetch(urlString);
 };

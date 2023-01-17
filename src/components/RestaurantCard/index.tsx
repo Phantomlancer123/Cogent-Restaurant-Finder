@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Card, Grid, CardMedia, CardContent, Typography, CardActionArea, Rating,
@@ -11,9 +12,13 @@ type Props = {
 };
 
 const RestaurantCard: React.FC<Props> = ({ data, index }) => {
-  console.log('detail', data);
+  const navigate = useNavigate();
+
+  const onClickDetail = useCallback(() => {
+    navigate(`/detail/${data.fsq_id}`);
+  }, []);
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} onClick={onClickDetail}>
       <CardActionArea>
         <CardMedia
           component="img"
