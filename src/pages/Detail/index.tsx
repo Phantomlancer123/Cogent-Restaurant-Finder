@@ -130,52 +130,50 @@ const DetailPage = () => {
   const { id } = useParams();
   const [detailData, setDetailData] = useState<CardModel>();
 
-  const getData = async (id: string) => {
-    const data: any = await getRestaurantDetail(id);
+  const getData = async (detailId) => {
+    const data: any = await getRestaurantDetail(detailId);
     if (data) setDetailData(data);
   };
 
   const onClickDetail = useCallback(() => {
     navigate('/home');
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (id) getData(id);
-  }, []);
-
-  return (
-    <div style={{ marginTop: '5%' }}>
-      {detailData && (
-        <>
-          <TitleWrapper>
-            {' '}
-            {detailData?.name}
-          </TitleWrapper>
-          <ButtonView><BackButton onClick={onClickDetail}>Go to Back</BackButton></ButtonView>
-          <Address>
-            📍
-            {detailData?.location.address}
-          </Address>
-          <Typography gutterBottom variant="body2" component="div" style={{ display: 'flex', marginLeft: '12%', marginTop: '20px' }}>
-            <Rating name="simple-controlled" value={detailData.rating / 2} />
-            {' '}
-            {detailData.rating}
-          </Typography>
-          <WorkingTime>{detailData.hours.display}</WorkingTime>
-          <TelTime>
-            📞
-            {detailData.tel || 'No Phone Number'}
-          </TelTime>
-          <WebsiteLink href={detailData.website}>
-            🌐
-            {detailData.website || 'No URL'}
-          </WebsiteLink>
-          <PhotoList photos={detailData?.photos} />
-          <MapView><Map status randomData={detailData} /></MapView>
-        </>
-      )}
-    </div>
-  );
+  }, [id]);
+  if (detailData) {
+    return (
+      <>
+        <TitleWrapper data-cy="restaurant-name">
+          {' '}
+          {detailData?.name}
+        </TitleWrapper>
+        <ButtonView><BackButton onClick={onClickDetail} data-cy="back-button">Go to Back</BackButton></ButtonView>
+        <Address data-cy="restaurant-address">
+          📍
+          {detailData?.location.address}
+        </Address>
+        <Typography gutterBottom variant="body2" component="div" style={{ display: 'flex', marginLeft: '12%', marginTop: '20px' }}>
+          <Rating name="simple-controlled" value={detailData.rating / 2} data-cy="restaurant-rating" />
+          {' '}
+          {detailData.rating}
+        </Typography>
+        <WorkingTime data-cy="restaurant-working-time">{detailData.hours.display}</WorkingTime>
+        <TelTime data-cy="restaurant-tel">
+          📞
+          {detailData.tel || 'No Phone Number'}
+        </TelTime>
+        <WebsiteLink href={detailData.website} target="_blank" data-cy="restaurant-website">
+          🌐
+          {detailData.website || 'No URL'}
+        </WebsiteLink>
+        <PhotoList photos={detailData?.photos} />
+        <MapView data-cy="restaurant-map"><Map status randomData={detailData} /></MapView>
+      </>
+    );
+  }
+  return null;
 };
 
 export default DetailPage;

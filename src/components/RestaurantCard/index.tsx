@@ -18,9 +18,9 @@ const RestaurantCard: React.FC<Props> = ({ data, index }) => {
 
   const onClickDetail = useCallback(() => {
     navigate(`/detail/${data.fsq_id}`);
-  }, []);
+  }, [data.fsq_id, navigate]);
   return (
-    <Card sx={{ maxWidth: 345 }} onClick={onClickDetail}>
+    <Card sx={{ maxWidth: 345 }} onClick={onClickDetail} data-cy="display-card">
       <CardActionArea>
         <CardMedia
           component="img"

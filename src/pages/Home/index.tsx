@@ -75,8 +75,8 @@ const HomePage = () => {
   const [status, setStatus] = useState<boolean>(true);
   const [restaurantData, setRestaurantData] = useState<CardModel[]>();
 
-  const getData = async (searchWord: string) => {
-    const data: DataType = await searchRestaurants(searchWord || 'restaurant');
+  const getData = async (foodName: string) => {
+    const data: DataType = await searchRestaurants(foodName || 'restaurant');
     const { results } = data;
     setRestaurantData(results);
     setRandomData(results && results[Math.floor(Math.random() * results.length)]);
@@ -92,7 +92,7 @@ const HomePage = () => {
     <>
       <SearchBar setSearchWord={setSearchWord} />
       <TitleWrapper>
-        <SweetTitle>
+        <SweetTitle data-cy="title">
           <span data-text="Find Restaurant">Find Restaurant</span>
           <span data-text="Around YOU!">Around YOU!</span>
         </SweetTitle>
@@ -105,7 +105,7 @@ const HomePage = () => {
         {(!status && restaurantData) && <CardsList restaurantData={restaurantData} />}
         {!randomData && 'No Result'}
       </HomeCompoenet>
-      <MapView>
+      <MapView data-cy="map-view">
         <Map locations={restaurantData} status={status} randomData={randomData} />
       </MapView>
     </>

@@ -19,22 +19,16 @@ export const params = {
   query: '',
 };
 
-export const urlConfig = {
-  apiUrl: foursquareAPI,
-  mapUrl: 'https://www.google.com/maps/search/?api=1&query=',
-  locale: 'en',
-};
-
 export const searchRestaurants = async (query: string) => {
   const newParams = { ...params, query };
-  const urlString = `${urlConfig.apiUrl}/places/search?fields=fsq_id,name,price,rating,location,geocodes,photos,categories&`
+  const urlString = `${foursquareAPI}/places/search?fields=fsq_id,name,rating,location,geocodes,photos,categories&`
     + `${QueryString.stringify(newParams)}&${QueryString.stringify(CREDENTIALS)}`;
   return originalFetch(urlString);
 };
 
 export const getRestaurantDetail = async (id: string) => {
   if (!id) return;
-  const urlString = `${urlConfig.apiUrl}/places/`
+  const urlString = `${foursquareAPI}/places/`
     + `${id}?fields=fsq_id,name,website,stats,geocodes,popularity,tips,tastes,features,rating,location,photos,hours,tel&${QueryString.stringify(CREDENTIALS)}`;
   // eslint-disable-next-line consistent-return
   return originalFetch(urlString);

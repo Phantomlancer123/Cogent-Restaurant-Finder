@@ -57,7 +57,7 @@ const SearchBar: React.FC<Props> = ({ setSearchWord }) => {
   }, []);
   const handleKeyDown = useCallback((e: any) => {
     if (e.key === 'Enter') { setSearchWord(word); }
-  }, [word]);
+  }, [setSearchWord, word]);
 
   return (
     <Box sx={{ flexGrow: 1, position: 'fixed', zIndex: 999 }}>
@@ -76,6 +76,7 @@ const SearchBar: React.FC<Props> = ({ setSearchWord }) => {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              data-cy="search-input"
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               onChange={handleSearchBox}
