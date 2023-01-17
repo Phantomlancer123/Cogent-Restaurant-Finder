@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { searchRestaurants, getRestaurantDetail } from '../../utils';
 
-const HomePage = () => (
-  <>HomePage</>
-);
+const HomePage = () => {
+  useEffect(() => {
+    const data = searchRestaurants('');
+    console.log(data);
+  }, []);
+  return (
+    <div>HomePage</div>
+  );
+};
 
 export default HomePage;
