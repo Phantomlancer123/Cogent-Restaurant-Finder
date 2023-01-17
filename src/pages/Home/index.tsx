@@ -7,7 +7,6 @@ import RestaurantCard from '../../components/RestaurantCard';
 import SearchBar from '../../components/SearchBar';
 import Map from '../../components/Map';
 
-import { HomeCompoenet } from './index.style';
 import { CardModel } from '../../models';
 
 type DataType = {
@@ -16,8 +15,17 @@ type DataType = {
   results: CardModel[]
 };
 
+const HomeCompoenet = styled('div')({
+  display: 'grid',
+  justifyContent: 'center',
+  color: 'white',
+  fontSize: '30px',
+  fontFamily: 'cursive',
+});
+
 const TitleWrapper = styled('div')({
-  marginTop: '30px',
+  marginTop: '80px',
+  marginBottom: '50px',
   display: 'grid',
   alignItems: 'center',
   justifyContent: 'center',

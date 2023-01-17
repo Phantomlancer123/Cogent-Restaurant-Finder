@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card, CardMedia, CardActionArea } from '@mui/material';
-
-import { WrapperCard } from './index.style';
+import {
+  Card, CardMedia, CardActionArea, styled,
+} from '@mui/material';
 
 type Icon = {
   prefix: string,
@@ -11,6 +11,14 @@ type Icon = {
 type Props = {
   photos: Icon[]
 };
+
+const WrapperCard = styled('div')({
+  width: '1200px',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+  gridGap: '45px',
+  margin: '30px auto',
+});
 
 const PhotoList: React.FC<Props> = ({ photos }) => (
   <WrapperCard>

@@ -14,6 +14,8 @@ type Props = {
 const RestaurantCard: React.FC<Props> = ({ data, index }) => {
   const navigate = useNavigate();
 
+  const imageSrc = data.photos.length ? `${data.photos[0].prefix}width300${data.photos[0].suffix}` : 'https://as2.ftcdn.net/v2/jpg/04/70/29/97/1000_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg';
+
   const onClickDetail = useCallback(() => {
     navigate(`/detail/${data.fsq_id}`);
   }, []);
@@ -23,7 +25,7 @@ const RestaurantCard: React.FC<Props> = ({ data, index }) => {
         <CardMedia
           component="img"
           height="240"
-          image={`${data.photos[0].prefix}width300${data.photos[0].suffix}`}
+          image={imageSrc}
           alt="green iguana"
         />
         <CardContent>
@@ -45,23 +47,21 @@ const RestaurantCard: React.FC<Props> = ({ data, index }) => {
           <Typography gutterBottom variant="body1" component="div" style={{ display: 'flex' }}>
             {data.location.address}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <Grid container>
-              {data.categories
-                && data.categories.map((item: any) => (
-                  <Grid item spacing={2} key={item.id} sx={{ p: 1 }}>
-                    <CardMedia
-                      component="img"
-                      image={`${item.icon.prefix}64${item.icon.suffix}`}
-                      alt={item.icon.name}
-                      height="64"
-                      width="64"
-                      sx={{ backgroundColor: '#444' }}
-                    />
-                  </Grid>
-                ))}
-            </Grid>
-          </Typography>
+          <Grid container>
+            {data.categories
+              && data.categories.map((item: any) => (
+                <Grid item key={item.id} sx={{ p: 1 }}>
+                  <CardMedia
+                    component="img"
+                    image={`${item.icon.prefix}64${item.icon.suffix}`}
+                    alt={item.icon.name}
+                    height="64"
+                    width="64"
+                    sx={{ backgroundColor: '#444' }}
+                  />
+                </Grid>
+              ))}
+          </Grid>
         </CardContent>
       </CardActionArea>
     </Card>

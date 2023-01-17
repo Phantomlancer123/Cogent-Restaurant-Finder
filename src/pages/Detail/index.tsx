@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Typography, Rating } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Typography, Rating, styled } from '@mui/material';
 
+import { CardModel } from '../../models';
 import { getRestaurantDetail } from '../../utils';
 import PhotoList from '../../components/PhotoList';
-import { CardModel } from '../../models';
 import Map from '../../components/Map';
 
 const TitleWrapper = styled('h1')({

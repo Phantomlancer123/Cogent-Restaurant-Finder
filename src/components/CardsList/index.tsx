@@ -1,12 +1,20 @@
 import React from 'react';
+import { styled } from '@mui/material/styles';
 
-import RestaurantCard from '../RestaurantCard';
 import { CardModel } from '../../models';
-import { WrapperCard } from './index.style';
+import RestaurantCard from '../RestaurantCard';
 
 type Props = {
   restaurantData: CardModel[]
 };
+
+const WrapperCard = styled('div')({
+  width: '1200px',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+  gridGap: '45px',
+  margin: '0 auto',
+});
 
 const CardsList: React.FC<Props> = ({ restaurantData }) => (
   <WrapperCard>
