@@ -17,6 +17,7 @@ type DataType = {
 };
 
 const TitleWrapper = styled('div')({
+  marginTop: '30px',
   display: 'grid',
   alignItems: 'center',
   justifyContent: 'center',
@@ -63,16 +64,19 @@ const SweetTitle = styled('h1')({
 const HomePage = () => {
   const [searchWord, setSearchWord] = useState<string>('');
   const [randomData, setRandomData] = useState<CardModel>();
+  const [status, setStatus] = useState<boolean>(true);
   const [restaurantData, setRestaurantData] = useState<CardModel[]>();
 
   const getData = async (searchWord: string) => {
     const data: DataType = await searchRestaurants(searchWord || 'restaurant');
     const { results } = data;
     setRestaurantData(results);
-    setRandomData(results[Math.floor(Math.random() * results.length)]);
+    setRandomData(results && results[Math.floor(Math.random() * results.length)]);
   };
 
   useEffect(() => {
+    if (searchWord !== '') setStatus(false);
+    else setStatus(true);
     getData(searchWord);
   }, [searchWord]);
 
@@ -87,14 +91,20 @@ const HomePage = () => {
       </TitleWrapper>
       <HomeCompoenet>
         {!searchWord
-          ? 'Random Restaurant'
+          ? 'Random Restaurant:'
           : searchWord}
-        {!searchWord && randomData && <RestaurantCard data={randomData} />}
-        {searchWord && restaurantData && <CardsList restaurantData={restaurantData} />}
+        {(status && randomData) && <RestaurantCard data={randomData} index={0} />}
+        {(!status && restaurantData) && <CardsList restaurantData={restaurantData} />}
+        {!randomData && 'No Result'}
       </HomeCompoenet>
-      <MapView>
-        <Map lat={randomData?.geocodes.main.latitude || 0} lng={randomData?.geocodes.main.longitude || 0} />
-      </MapView>
+      {
+        (restaurantData && randomData)
+        && (
+          <MapView>
+            <Map locations={restaurantData} status={status} randomData={randomData} />
+          </MapView>
+        )
+      }
     </>
   );
 };

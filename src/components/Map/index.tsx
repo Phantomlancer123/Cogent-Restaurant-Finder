@@ -1,17 +1,34 @@
 import React from 'react';
 import { GoogleMap, LoadScript, MarkerF } from '@react-google-maps/api';
 import { currentLocation } from '../../config/Location';
+import { CardModel } from '../../models';
 
 type Props = {
-  lat: number,
-  lng: number
+  locations: CardModel[],
+  status: boolean,
+  randomData: CardModel
 };
 
-const Map: React.FC<Props> = ({ lat, lng }) => {
-  const position = {
-    lat,
-    lng,
-  };
+const Map: React.FC<Props> = ({ locations, status, randomData }) => {
+  const positions: any = [];
+
+  if (status) {
+    positions.push(
+      {
+        lat: randomData.geocodes.main.latitude,
+        lng: randomData.geocodes.main.longitude,
+      },
+    );
+  } else {
+    locations.forEach((location) => {
+      positions.push(
+        {
+          lat: location.geocodes.main.latitude,
+          lng: location.geocodes.main.longitude,
+        },
+      );
+    });
+  }
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API || ''}>
       <GoogleMap
@@ -20,7 +37,9 @@ const Map: React.FC<Props> = ({ lat, lng }) => {
         zoom={15}
       >
         <MarkerF position={currentLocation} label="🏠" />
-        <MarkerF position={position} />
+        {
+          positions.map((p: any, index: number) => <MarkerF position={p} label={(index + 1).toString()} />)
+        }
       </GoogleMap>
     </LoadScript>
   );

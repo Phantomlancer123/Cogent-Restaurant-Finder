@@ -7,9 +7,10 @@ import { CardModel } from '../../models';
 
 type Props = {
   data: CardModel;
+  index: number;
 };
 
-const RestaurantCard: React.FC<Props> = ({ data }) => {
+const RestaurantCard: React.FC<Props> = ({ data, index }) => {
   console.log('detail', data);
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -21,8 +22,15 @@ const RestaurantCard: React.FC<Props> = ({ data }) => {
           alt="green iguana"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div" style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-            {data.name}
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            style={{
+              display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+            }}
+          >
+            {`${index + 1}.${data.name}`}
           </Typography>
           <Typography gutterBottom variant="body2" component="div" style={{ display: 'flex', color: 'gray' }}>
             <Rating name="simple-controlled" value={data.rating / 2} />

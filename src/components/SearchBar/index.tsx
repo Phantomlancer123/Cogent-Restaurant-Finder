@@ -52,15 +52,15 @@ type Props = {
 
 const SearchBar: React.FC<Props> = ({ setSearchWord }) => {
   const [word, setWord] = useState('');
-  const handleSearchBox = useCallback((e) => {
+  const handleSearchBox = useCallback((e: any) => {
     setWord(e.target.value);
   }, []);
   const handleKeyDown = useCallback((e: any) => {
     if (e.key === 'Enter') { setSearchWord(word); }
-  }, []);
+  }, [word]);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, position: 'fixed', zIndex: 999 }}>
       <AppBar position="static">
         <Toolbar>
           <Typography

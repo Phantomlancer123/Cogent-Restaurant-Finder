@@ -10,8 +10,8 @@ type Props = {
 
 const CardsList: React.FC<Props> = ({ restaurantData }) => (
   <WrapperCard>
-    {restaurantData.map((data) => (
-      <RestaurantCard data={data} />
+    {restaurantData.map((data, index) => (
+      <RestaurantCard data={data} index={index} />
     ))}
   </WrapperCard>
 );
