@@ -1,31 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { searchRestaurants } from '../../utils';
-import CardsList from '../../components/CardsList';
+import RestaurantCard from '../../components/RestaurantCard';
+import SearchBar from '../../components/SearchBar';
 import { HomeCompoenet } from './index.style';
+import { CardModel } from '../../models';
 
 type DataType = {
   // eslint-disable-next-line @typescript-eslint/ban-types
   contexts: object,
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  results: object[]
+  results: CardModel[]
 };
 
 const HomePage = () => {
-  let randomData;
+  // const [searchWord, setSearchWord] = useState<string>('');
+  const [randomData, setRandomData] = useState<CardModel>();
+
   const getData = async () => {
-    const data: DataType = await searchRestaurants('');
+    const data: DataType = await searchRestaurants('restaurant');
     const { results } = data;
-    randomData = results[Math.floor(Math.random() * results.length)];
-    console.log(randomData);
+    setRandomData(results[Math.floor(Math.random() * results.length)]);
   };
+
   useEffect(() => {
     getData();
   }, []);
+
   return (
-    <HomeCompoenet>
-      {/* <RestaurantCard data={randomData} /> */}
-      <CardsList />
-    </HomeCompoenet>
+    <>
+      <SearchBar />
+
+      <HomeCompoenet>
+        Random Restaurant
+        {' '}
+        {randomData && <RestaurantCard data={randomData} />}
+        {/* <CardsList /> */}
+      </HomeCompoenet>
+    </>
   );
 };
 

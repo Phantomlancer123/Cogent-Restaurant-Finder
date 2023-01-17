@@ -1,5 +1,15 @@
-export default interface CardModel {
-  src: string,
+type Icon = {
+  prefix: string,
+  suffix: string
+};
+
+type Category = {
+  icon: Icon,
   name: string,
-  detail: string
+
+};
+export default interface CardModel {
+  photos: Icon[],
+  name: string,
+  categories: Category[]
 }
