@@ -1,13 +1,31 @@
 import React, { useEffect } from 'react';
-import { searchRestaurants, getRestaurantDetail } from '../../utils';
+import { searchRestaurants } from '../../utils';
+import CardsList from '../../components/CardsList';
+import { HomeCompoenet } from './index.style';
+
+type DataType = {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  contexts: object,
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  results: object[]
+};
 
 const HomePage = () => {
+  let randomData;
+  const getData = async () => {
+    const data: DataType = await searchRestaurants('');
+    const { results } = data;
+    randomData = results[Math.floor(Math.random() * results.length)];
+    console.log(randomData);
+  };
   useEffect(() => {
-    const data = searchRestaurants('');
-    console.log(data);
+    getData();
   }, []);
   return (
-    <div>HomePage</div>
+    <HomeCompoenet>
+      {/* <RestaurantCard data={randomData} /> */}
+      <CardsList />
+    </HomeCompoenet>
   );
 };
 
