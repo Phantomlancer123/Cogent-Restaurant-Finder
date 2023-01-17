@@ -11,5 +11,13 @@ type Category = {
 export default interface CardModel {
   photos: Icon[],
   name: string,
-  categories: Category[]
+  categories: Category[],
+  rating: number,
+  location: { address: string },
+  geocodes: {
+    main: {
+      latitude: number,
+      longitude: number
+    }
+  }
 }

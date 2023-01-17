@@ -4,6 +4,8 @@ import { styled } from '@mui/material/styles';
 import { searchRestaurants } from '../../utils';
 import RestaurantCard from '../../components/RestaurantCard';
 import SearchBar from '../../components/SearchBar';
+import Map from '../../components/Map';
+
 import { HomeCompoenet } from './index.style';
 import { CardModel } from '../../models';
 
@@ -18,6 +20,13 @@ const TitleWrapper = styled('div')({
   alignItems: 'center',
   justifyContent: 'center',
   transform: 'skew(0,-10deg)',
+});
+
+const MapView = styled('div')({
+  position: 'fixed',
+  right: '50px',
+  bottom: '0px',
+  zIndex: '99',
 });
 
 const SweetTitle = styled('h1')({
@@ -79,6 +88,9 @@ const HomePage = () => {
         {randomData && <RestaurantCard data={randomData} />}
         {/* <CardsList /> */}
       </HomeCompoenet>
+      <MapView>
+        <Map lat={randomData?.geocodes.main.latitude || 0} lng={randomData?.geocodes.main.longitude || 0} />
+      </MapView>
     </>
   );
 };

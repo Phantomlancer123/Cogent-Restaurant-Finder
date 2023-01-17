@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  Card, Grid, CardMedia, CardContent, Typography, CardActionArea,
+  Card, Grid, CardMedia, CardContent, Typography, CardActionArea, Rating,
 } from '@mui/material';
 import { CardModel } from '../../models';
 
@@ -16,13 +16,21 @@ const RestaurantCard: React.FC<Props> = ({ data }) => {
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
+          height="240"
           image={`${data.photos[0].prefix}width300${data.photos[0].suffix}`}
           alt="green iguana"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
             {data.name}
+          </Typography>
+          <Typography gutterBottom variant="body2" component="div" style={{ display: 'flex', color: 'gray' }}>
+            <Rating name="simple-controlled" value={data.rating / 2} />
+            {' '}
+            {data.rating}
+          </Typography>
+          <Typography gutterBottom variant="body1" component="div" style={{ display: 'flex' }}>
+            {data.location.address}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             <Grid container>

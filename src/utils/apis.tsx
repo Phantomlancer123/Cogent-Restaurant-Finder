@@ -26,7 +26,7 @@ export const urlConfig = {
 
 export const searchRestaurants = async (query: string) => {
   const newParams = { ...params, query };
-  const urlString = `${urlConfig.apiUrl}/places/search?fields=fsq_id,name,description,rating,location,photos,hours,tel,categories&`
+  const urlString = `${urlConfig.apiUrl}/places/search?fields=fsq_id,name,rating,location,geocodes,photos,hours,tel,categories&`
     + `${QueryString.stringify(newParams)}&${QueryString.stringify(CREDENTIALS)}`;
   return originalFetch(urlString);
 };
@@ -34,7 +34,7 @@ export const searchRestaurants = async (query: string) => {
 export const getRestaurantDetail = async ({ id }: any) => {
   if (!id) return;
   const urlString = `${urlConfig.apiUrl}/places/`
-    + `${id}?fields=fsq_id,name,description,rating,location,photos,hours,tel,categories&${QueryString.stringify(CREDENTIALS)}`;
+    + `${id}?fields=fsq_id,name,rating,location,photos,hours,tel,categories&${QueryString.stringify(CREDENTIALS)}`;
   // eslint-disable-next-line consistent-return
   return originalFetch(urlString);
 };
