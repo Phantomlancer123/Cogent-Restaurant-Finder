@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { Typography, Rating, styled } from '@mui/material';
 
 import { CardModel } from '../../models';
@@ -80,7 +81,52 @@ const MapView = styled('div')({
   zIndex: '99',
 });
 
+const ButtonView = styled('div')(() => ({
+  position: 'fixed',
+  right: '50px',
+  top: '100px',
+  zIndex: '99',
+}));
+
+const BackButton = styled('div')(() => ({
+  alignSelf: 'center',
+  backgroundColor: 'none',
+  backgroundImage: 'none',
+  backgroundPosition: '0 90%',
+  backgroundRepeat: 'repeat noRepeat',
+  backgroundSize: '4px 3px',
+  borderRadius: '15px 225px 255px 15px 15px 255px 225px 15px',
+  borderStyle: 'solid',
+  borderWidth: '2px',
+  boxShadow: 'rgba(0, 0, 0, .2) 15px 28px 25px -18px',
+  boxSizing: 'border-box',
+  color: 'white',
+  cursor: 'pointer',
+  display: 'inline-block',
+  fontFamily: 'Neucha, sansSerif',
+  fontSize: '1rem',
+  lineHeight: '23px',
+  outline: 'none',
+  padding: '.75rem',
+  textDecoration: 'none',
+  transition: 'all 235ms ease-in-out',
+  borderBottomLeftRadius: '15px 255px',
+  borderBottomRightRadius: '225px 15px',
+  borderTopLeftRadius: '255px 15px',
+  borderTopRightRadius: '15px 225px',
+  userSelect: 'none',
+  touchAction: 'manipulation',
+  '&:hover': {
+    boxShadow: 'rgba(0, 0, 0, .3) 2px 8px 8px -5px',
+    transform: 'translate3d(0, 2px, 0)',
+  },
+  '&:focus': {
+    boxShadow: 'rgba(0, 0, 0, .3) 2px 8px 4px -6px',
+  },
+}));
+
 const DetailPage = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [detailData, setDetailData] = useState<CardModel>();
 
@@ -88,6 +134,10 @@ const DetailPage = () => {
     const data: any = await getRestaurantDetail(id);
     if (data) setDetailData(data);
   };
+
+  const onClickDetail = useCallback(() => {
+    navigate('/home');
+  }, []);
 
   useEffect(() => {
     if (id) getData(id);
@@ -101,6 +151,7 @@ const DetailPage = () => {
             {' '}
             {detailData?.name}
           </TitleWrapper>
+          <ButtonView><BackButton onClick={onClickDetail}>Go to Back</BackButton></ButtonView>
           <Address>
             📍
             {detailData?.location.address}
@@ -113,11 +164,11 @@ const DetailPage = () => {
           <WorkingTime>{detailData.hours.display}</WorkingTime>
           <TelTime>
             📞
-            {detailData.tel}
+            {detailData.tel || 'No Phone Number'}
           </TelTime>
           <WebsiteLink href={detailData.website}>
             🌐
-            {detailData.website}
+            {detailData.website || 'No URL'}
           </WebsiteLink>
           <PhotoList photos={detailData?.photos} />
           <MapView><Map status randomData={detailData} /></MapView>
