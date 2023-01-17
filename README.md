@@ -5,6 +5,10 @@ have a web app service which can help them pick a restaurant close to the office
 restaurant, so they would also like to be able to do a keyword search for restaurants in the area. Lots of pictures and reviews about the
 restaurant help a lot while deciding a new restaurant.
 
+## Preview Video
+
+https://user-images.githubusercontent.com/102849364/212851115-e3f2fca6-2dc9-4b74-a689-11f58cfd7ceb.mp4
+
 ## Technical choices, including architectural
 
 -This project built with React.js with TypeScript.
