@@ -1,5 +1,6 @@
 import React from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, MarkerF } from '@react-google-maps/api';
+import { currentLocation } from '../../config/Location';
 
 type Props = {
   lat: number,
@@ -7,19 +8,19 @@ type Props = {
 };
 
 const Map: React.FC<Props> = ({ lat, lng }) => {
-  const center = {
+  const position = {
     lat,
     lng,
   };
-  console.log(center);
   return (
-    <LoadScript googleMapsApiKey={process.env.GOOGLE_MAP_API || ''}>
+    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API || ''}>
       <GoogleMap
         mapContainerStyle={{ width: '500px', height: '300px' }}
-        center={center}
-        zoom={18}
+        center={currentLocation}
+        zoom={15}
       >
-        {center && <Marker position={center} />}
+        <MarkerF position={currentLocation} label="🏠" />
+        <MarkerF position={position} />
       </GoogleMap>
     </LoadScript>
   );

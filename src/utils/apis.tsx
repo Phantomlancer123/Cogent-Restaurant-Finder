@@ -1,5 +1,6 @@
 import QueryString from 'query-string';
 import { originalFetch } from './request';
+import { currentLocation } from '../config/Location';
 
 const foursquareAPI = process.env.REACT_APP_FOURSQUARE_API;
 const foursquareAPIClientId = process.env.REACT_APP_FOURSQUARE_API_CLIENT_ID;
@@ -12,7 +13,7 @@ export const CREDENTIALS = {
 };
 
 export const params = {
-  ll: '35.664679693351275,139.7378200559551',
+  ll: `${currentLocation.lat},${currentLocation.lng}`,
   radius: 1000,
   categoryId: '4d4b7105d754a06374d81259',
   query: '',
